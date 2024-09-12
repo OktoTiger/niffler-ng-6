@@ -45,6 +45,7 @@ public class ProfilePage {
         checkBoxSelector.click();
         return this;
     }
+
     @Step("Ввод категории")
     public ProfilePage setCategory(String categoryName) {
         categoryInputSelector.setValue(categoryName);

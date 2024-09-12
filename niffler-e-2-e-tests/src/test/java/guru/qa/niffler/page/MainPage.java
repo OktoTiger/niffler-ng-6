@@ -13,22 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Data
 public class MainPage {
-  private final ElementsCollection tableRows = $("#spendings tbody").$$("tr");
-  private final SelenideElement titleSelector = $(byText("History of Spendings"));
+    private final ElementsCollection tableRows = $("#spendings tbody").$$("tr");
+    private final SelenideElement titleSelector = $(byText("History of Spendings"));
 
-  public EditSpendingPage editSpending(String spendingDescription) {
-    tableRows.find(text(spendingDescription)).$$("td").get(5).click();
-    return new EditSpendingPage();
-  }
-  @Step("Проверка успешной регистрации")
-  public void checkThatTableContainsSpending(String spendingDescription) {
-    tableRows.find(text(spendingDescription)).should(visible);
-  }
+    public EditSpendingPage editSpending(String spendingDescription) {
+        tableRows.find(text(spendingDescription)).$$("td").get(5).click();
+        return new EditSpendingPage();
+    }
 
-  @Step("Проверка успешной авторизации")
-  public void checkSuccessLogIn() {
-    assertEquals(titleSelector.text(), "History of Spendings");
-  }
+    @Step("Проверка успешной регистрации")
+    public void checkThatTableContainsSpending(String spendingDescription) {
+        tableRows.find(text(spendingDescription)).should(visible);
+    }
+
+    @Step("Проверка успешной авторизации")
+    public void checkSuccessLogIn() {
+        assertEquals(titleSelector.text(), "History of Spendings");
+    }
 
 
 }

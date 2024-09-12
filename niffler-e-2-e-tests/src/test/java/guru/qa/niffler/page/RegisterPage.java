@@ -15,16 +15,17 @@ public class RegisterPage {
     private final SelenideElement passwordSubmitInputSelector = $("#passwordSubmit");
     private final SelenideElement signUpButtonSelector = $("button[type='submit']");
     private final SelenideElement titleSuccessSignUpSelector = $(byText("Congratulations! You've registered!"));
-    private final SelenideElement ErrorMessageForExistedUser = $(".form__error");
-    private final SelenideElement ErrorMassegeForNotEqualPassword = $(byText("Passwords should be equal"));
-    private final SelenideElement ErrorMassegeForInvalidPassword = $(byText("Allowed password length should be from 3 to 12 characters"));
-    private final SelenideElement ErrorMassegeForInvalidUsername = $(byText("Allowed username length should be from 3 to 50 characters"));
+    private final SelenideElement errorMessageForExistedUser = $(".form__error");
+    private final SelenideElement errorMassegeForNotEqualPassword = $(byText("Passwords should be equal"));
+    private final SelenideElement errorMassegeForInvalidPassword = $(byText("Allowed password length should be from 3 to 12 characters"));
+    private final SelenideElement errorMassegeForInvalidUsername = $(byText("Allowed username length should be from 3 to 50 characters"));
 
     @Step("Ввод username")
     public RegisterPage setUsername(String username) {
         usernameInputSelectorSelector.setValue(username);
         return this;
     }
+
     @Step("Ввод пароля")
     public RegisterPage setPassword(String password) {
         passwordInputSelector.setValue(password);
@@ -44,10 +45,9 @@ public class RegisterPage {
     }
 
 
-
     /**
      * ---------------------------Checks----------------------------------------------------
-     * */
+     */
 
     @Step("Проверка успешной регистрации")
     public void checkSuccessRegistration() {
@@ -55,12 +55,9 @@ public class RegisterPage {
     }
 
     @Step("Проверка сообщения при не верной регистрации")
-    public void checkUnSuccessfulErrorMessage(SelenideElement element, String errorMessage){
+    public void checkUnSuccessfulErrorMessage(SelenideElement element, String errorMessage) {
         assertEquals(element.getText(), errorMessage);
     }
-
-
-
 
 
 }
