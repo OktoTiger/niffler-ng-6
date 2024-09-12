@@ -20,9 +20,6 @@ public class RegisterPage {
     private final SelenideElement ErrorMassegeForInvalidPassword = $(byText("Allowed password length should be from 3 to 12 characters"));
     private final SelenideElement ErrorMassegeForInvalidUsername = $(byText("Allowed username length should be from 3 to 50 characters"));
 
-
-    private MainPage mainPage = new MainPage();
-
     @Step("Ввод username")
     public RegisterPage setUsername(String username) {
         usernameInputSelectorSelector.setValue(username);
