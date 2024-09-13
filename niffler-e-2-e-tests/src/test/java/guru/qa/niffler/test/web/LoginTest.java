@@ -1,6 +1,5 @@
 package guru.qa.niffler.test.web;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import guru.qa.niffler.config.Config;
 import guru.qa.niffler.page.LoginPage;
@@ -27,7 +26,6 @@ class LoginTest {
     @Description("[POS] Отображение главной страницы при успешной авторизации")
     @Test
     void mainPageShouldBeDisplayedAfterSuccessfulLoginTest() {
-        Configuration.holdBrowserOpen = true;
         loginPage.setUsername(existedUser)
                 .setPassword(existedPassword)
                 .submitSignUpButton();
