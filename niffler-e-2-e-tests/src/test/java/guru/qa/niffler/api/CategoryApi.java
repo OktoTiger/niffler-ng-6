@@ -6,13 +6,13 @@ import retrofit2.http.*;
 
 public interface CategoryApi {
 
-    @POST("/api/categories/add")
-    Call<CategoryJson> addCategories(@Body CategoryJson categories);
+    @POST("internal/categories/add")
+    Call<CategoryJson> addCategories(@Body CategoryJson category);
 
-    @PATCH("/api/categories/update")
-    Call<CategoryJson> updateCategories(@Body CategoryJson categories);
+    @PATCH("internal/categories/update")
+    Call<CategoryJson> updateCategories(@Body CategoryJson category);
 
-    @GET("/api/categories/all")
+    @GET("internal/categories/all")
     Call<CategoryJson> getAllCategories(@Query("excludeArchived") boolean value);
 
 

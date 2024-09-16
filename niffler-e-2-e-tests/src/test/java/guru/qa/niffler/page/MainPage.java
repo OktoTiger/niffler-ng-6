@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MainPage {
     private final ElementsCollection tableRows = $("#spendings tbody").$$("tr");
     private final SelenideElement titleSelector = $(byText("History of Spendings"));
+    private final SelenideElement menuSelector = $("button[aria-label='Menu']");
+    private final SelenideElement profileSelector = $(byText("Profile"));
 
     public EditSpendingPage editSpending(String spendingDescription) {
         tableRows.find(text(spendingDescription)).$$("td").get(5).click();
@@ -30,6 +32,17 @@ public class MainPage {
     public void checkSuccessLogIn() {
         assertEquals(titleSelector.text(), "History of Spendings");
     }
+
+    @Step("Нажать на кнопку Меню")
+    public void clickMenuButton() {
+        menuSelector.click();
+    }
+
+    @Step("Нажать на ссылку profile")
+    public void clickProfileLink() {
+        profileSelector.click();
+    }
+
 
 
 }

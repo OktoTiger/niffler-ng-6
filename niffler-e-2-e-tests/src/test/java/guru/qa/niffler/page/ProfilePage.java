@@ -1,30 +1,35 @@
 package guru.qa.niffler.page;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class ProfilePage {
     private final SelenideElement inputImageSelector = $(".image__input-label");
-    private final SelenideElement usernameInputSelectorSelector = $("#username");
-    private final SelenideElement nameInputSelectorSelector = $("#name");
+    private final SelenideElement usernameInputSelector = $("#username");
+    private final SelenideElement nameInputSelector = $("#name");
     private final SelenideElement signUpButtonSelector = $("button[type='submit']");
     private final SelenideElement checkBoxSelector = $("input[type='checkbox']");
     private final SelenideElement categoryInputSelector = $("#category");
     private final SelenideElement editButtonSelector = $("button[aria-label='Edit category']");
     private final SelenideElement archiveButtonSelector = $("button[aria-label='Archive category']");
+    private final ElementsCollection categoryList = $$(".MuiChip-root");
 
 
     @Step("Ввод username")
     public ProfilePage setUsername(String username) {
-        usernameInputSelectorSelector.setValue(username);
+        usernameInputSelector.setValue(username);
         return this;
     }
 
     @Step("Ввод name")
     public ProfilePage setName(String name) {
-        nameInputSelectorSelector.setValue(name);
+        nameInputSelector.setValue(name);
         return this;
     }
 
@@ -66,7 +71,12 @@ public class ProfilePage {
 
     /**
      * ----------------------------------Checks----------------------------------------------------------------------
-     * */
+     */
+
+    @Step("Проверка отображения категории")
+    public void checkCategoryShouldBeVisible(String category) {
+        categoryList.findBy(text(category)).shouldBe(visible);
+    }
 
 
 }

@@ -3,7 +3,10 @@ package guru.qa.niffler.api;
 import guru.qa.niffler.api.enums.Currency;
 import guru.qa.niffler.api.enums.Period;
 import guru.qa.niffler.config.Config;
+import guru.qa.niffler.model.CategoryJson;
 import guru.qa.niffler.model.SpendJson;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -15,7 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpendApiClient {
 
+
+    protected final HttpLoggingInterceptor logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    protected final OkHttpClient httpClient = new OkHttpClient().newBuilder().addInterceptor(logging).build();
+
+//    private final Retrofit retrofit = new Retrofit.Builder()
+//            .baseUrl(Config.getInstance().spendUrl())
+//            .addConverterFactory(JacksonConverterFactory.create())
+//            .build();
+
     private final Retrofit retrofit = new Retrofit.Builder()
+            .client(httpClient)
             .baseUrl(Config.getInstance().spendUrl())
             .addConverterFactory(JacksonConverterFactory.create())
             .build();
@@ -75,6 +88,38 @@ public class SpendApiClient {
         }
         assertEquals(200, response.code());
     }
+    public CategoryJson createCategory(CategoryJson category) {
+        final Response<CategoryJson> response;
+        try {
+            response = spendApi.addCategories(category).execute();
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(200, response.code());
+        return response.body();
+    }
+
+    public CategoryJson updateCategory(CategoryJson category) {
+        final Response<CategoryJson> response;
+        try {
+            response = spendApi.updateCategories(category).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(200, response.code());
+        return response.body();
+    }
+
+    public CategoryJson getAllCategories(Boolean value) {
+        final Response<CategoryJson> response;
+        try {
+            response = spendApi.getAllCategories(value).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(200, response.code());
+        return response.body();
+    }
 
 }

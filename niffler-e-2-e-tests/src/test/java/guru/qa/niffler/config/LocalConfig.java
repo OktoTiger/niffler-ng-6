@@ -19,7 +19,7 @@ enum LocalConfig implements Config {
   }
 
   public String categoryUrl() {
-    return "http://127.0.0.1:8090/";
+    return "http://127.0.0.1:8093/";
   }
 
 
