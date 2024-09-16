@@ -9,6 +9,6 @@ public interface Config {
   String frontUrl();
 
   String spendUrl();
-  String registerUrl();
-  String categoryUrl();
+
+  String ghUrl();
 }
