@@ -1,6 +1,5 @@
 package guru.qa.niffler.test.web;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import guru.qa.niffler.config.Config;
 import guru.qa.niffler.jupiter.Category;
@@ -13,8 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static guru.qa.niffler.helper.UserData.existedPassword;
-import static guru.qa.niffler.helper.UserData.existedUser;
+import static guru.qa.niffler.helper.DataGenerator.existedPassword;
+import static guru.qa.niffler.helper.DataGenerator.existedUser;
 
 public class ProfileTest {
     private static final Config CFG = Config.getInstance();

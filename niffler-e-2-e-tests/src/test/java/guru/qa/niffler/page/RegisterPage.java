@@ -54,7 +54,7 @@ public class RegisterPage {
         assertEquals(titleSuccessSignUpSelector.text(), "Congratulations! You've registered!");
     }
 
-    @Step("Проверка сообщения при не верной регистрации")
+    @Step("Проверка сообщения об ошибке при не успешной регистрации")
     public void checkUnSuccessfulErrorMessage(SelenideElement element, String errorMessage) {
         assertEquals(element.getText(), errorMessage);
     }

@@ -6,7 +6,7 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static guru.qa.niffler.helper.UserData.*;
+import static guru.qa.niffler.helper.DataGenerator.*;
 
 import guru.qa.niffler.config.Config;
 

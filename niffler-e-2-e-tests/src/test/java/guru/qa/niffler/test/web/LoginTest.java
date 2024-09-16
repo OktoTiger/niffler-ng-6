@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static guru.qa.niffler.helper.UserData.*;
+import static guru.qa.niffler.helper.DataGenerator.*;
 
 class LoginTest {
     private static final Config CFG = Config.getInstance();

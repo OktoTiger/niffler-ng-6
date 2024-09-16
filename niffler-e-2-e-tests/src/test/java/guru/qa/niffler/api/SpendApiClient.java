@@ -22,11 +22,6 @@ public class SpendApiClient {
     protected final HttpLoggingInterceptor logging = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     protected final OkHttpClient httpClient = new OkHttpClient().newBuilder().addInterceptor(logging).build();
 
-//    private final Retrofit retrofit = new Retrofit.Builder()
-//            .baseUrl(Config.getInstance().spendUrl())
-//            .addConverterFactory(JacksonConverterFactory.create())
-//            .build();
-
     private final Retrofit retrofit = new Retrofit.Builder()
             .client(httpClient)
             .baseUrl(Config.getInstance().spendUrl())
@@ -88,6 +83,7 @@ public class SpendApiClient {
         }
         assertEquals(200, response.code());
     }
+
     public CategoryJson createCategory(CategoryJson category) {
         final Response<CategoryJson> response;
         try {
@@ -111,7 +107,7 @@ public class SpendApiClient {
         return response.body();
     }
 
-    public CategoryJson getAllCategories(Boolean value) {
+    public CategoryJson getAllCategory(Boolean value) {
         final Response<CategoryJson> response;
         try {
             response = spendApi.getAllCategories(value).execute();
