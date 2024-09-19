@@ -3,15 +3,12 @@ package guru.qa.niffler.page;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import lombok.Data;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Data
 public class MainPage {
     private final ElementsCollection tableRows = $("#spendings tbody").$$("tr");
     private final SelenideElement titleSelector = $(byText("History of Spendings"));
@@ -29,8 +26,8 @@ public class MainPage {
     }
 
     @Step("Проверка успешной авторизации")
-    public void checkSuccessLogIn() {
-        assertEquals(titleSelector.text(), "History of Spendings");
+    public void checkSuccessLogIn(String text) {
+        titleSelector.shouldHave(text(text)).shouldBe(visible);
     }
 
     @Step("Нажать на кнопку Меню")
@@ -42,7 +39,6 @@ public class MainPage {
     public void clickProfileLink() {
         profileSelector.click();
     }
-
 
 
 }

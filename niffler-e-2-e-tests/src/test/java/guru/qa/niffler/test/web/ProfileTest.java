@@ -12,14 +12,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.executeJavaScript;
-import static guru.qa.niffler.helper.DataGenerator.existedPassword;
-import static guru.qa.niffler.helper.DataGenerator.existedUser;
-
 public class ProfileTest {
     private static final Config CFG = Config.getInstance();
     LoginPage loginPage = new LoginPage();
     MainPage mainPage = new MainPage();
     ProfilePage profilePage = new ProfilePage();
+    private final String existedUser = "severus";
+    private final String existedPassword = "12345";
 
     @BeforeEach
     void setUp() {
@@ -49,7 +48,6 @@ public class ProfileTest {
     @Test
     @DisplayName("[POS] Отображение активной категории в профиле")
     void ActiveCategoryShouldPresentInCategoriesListPositiveTest(CategoryJson category) {
-        System.out.println("sss");
         loginPage.setUsername(existedUser)
                 .setPassword(existedPassword)
                 .submitSignUpButton();
