@@ -14,6 +14,7 @@ public class MainPage {
     private final SelenideElement titleSelector = $(byText("History of Spendings"));
     private final SelenideElement menuSelector = $("button[aria-label='Menu']");
     private final SelenideElement profileSelector = $(byText("Profile"));
+    private final SelenideElement headerMenu = $("ul[role='menu']");
 
     public EditSpendingPage editSpending(String spendingDescription) {
         tableRows.find(text(spendingDescription)).$$("td").get(5).click();
@@ -39,6 +40,8 @@ public class MainPage {
     public void clickProfileLink() {
         profileSelector.click();
     }
+
+
 
 
 }

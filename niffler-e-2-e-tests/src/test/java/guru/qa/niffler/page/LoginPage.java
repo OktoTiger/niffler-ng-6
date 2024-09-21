@@ -20,6 +20,12 @@ public class LoginPage {
         return new MainPage();
     }
 
+    public MainPage successLogin(String username, String password) {
+        login(username, password);
+        return new MainPage();
+    }
+
+
     @Step("Ввод username")
     public LoginPage setUsername(String username) {
         usernameInputSelector.setValue(username);
