@@ -3,6 +3,7 @@ package guru.qa.niffler.test.web;
 import com.codeborne.selenide.Selenide;
 import guru.qa.niffler.config.Config;
 import guru.qa.niffler.jupiter.annotation.Category;
+import guru.qa.niffler.jupiter.annotation.meta.User;
 import guru.qa.niffler.model.CategoryJson;
 import guru.qa.niffler.page.LoginPage;
 import guru.qa.niffler.page.MainPage;
@@ -11,7 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static com.codeborne.selenide.Selenide.executeJavaScript;
+
 public class ProfileTest {
     private static final Config CFG = Config.getInstance();
     LoginPage loginPage = new LoginPage();
@@ -26,9 +30,12 @@ public class ProfileTest {
         executeJavaScript("return document.readyState").equals("complete");
     }
 
-    @Category(
-            username = "severus",
-            acrhived = true
+    @User(
+            username = existedUser,
+            categories = @Category(
+                    username = "severus",
+                    acrhived = true
+            )
     )
     @Test
     @DisplayName("[POS] Отображение архивной категории в профиле")
@@ -41,9 +48,12 @@ public class ProfileTest {
         profilePage.clickCheckbox().checkCategoryShouldBeVisible(category.name());
     }
 
-    @Category(
-            username = "severus",
-            acrhived = false
+    @User(
+            username = existedUser,
+            categories = @Category(
+                    username = "severus",
+                    acrhived = false
+            )
     )
     @Test
     @DisplayName("[POS] Отображение активной категории в профиле")
