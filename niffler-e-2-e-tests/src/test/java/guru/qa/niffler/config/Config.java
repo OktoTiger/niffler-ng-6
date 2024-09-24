@@ -19,4 +19,13 @@ public interface Config {
   String ghUrl();
 
   String registerUrl();
+
+  String authJdbcUrl();
+
+  String userdataJdbcUrl();
+
+  String spendJdbcUrl();
+
+  String currencyJdbcUrl();
+
 }
