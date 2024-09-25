@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface CategoryDao {
     CategoryEntity create (CategoryEntity spend);
     Optional<CategoryEntity> findCategoryById(UUID id);
+    void delete (UUID spend);
 }

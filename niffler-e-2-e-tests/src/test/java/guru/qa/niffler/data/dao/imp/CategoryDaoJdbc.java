@@ -15,7 +15,7 @@ public class CategoryDaoJdbc implements CategoryDao {
     public CategoryEntity create(CategoryEntity category) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO spend (username, name, archived) " +
+                    "INSERT INTO category (username, name, archived) " +
                             "VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             )) {
@@ -67,6 +67,20 @@ public class CategoryDaoJdbc implements CategoryDao {
             }
 
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void delete(UUID id) {
+        try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
+            try(PreparedStatement ps = connection.prepareStatement(
+                    "DELETE FROM category WHERE id = ?",
+                    Statement.RETURN_GENERATED_KEYS)){
+                ps.setObject(1,id);
+                ps.execute();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
