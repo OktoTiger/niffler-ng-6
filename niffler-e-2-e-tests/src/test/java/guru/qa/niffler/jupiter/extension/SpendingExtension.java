@@ -1,5 +1,6 @@
 package guru.qa.niffler.jupiter.extension;
 
+import com.github.jknack.handlebars.internal.lang3.ArrayUtils;
 import guru.qa.niffler.api.SpendApiClient;
 import guru.qa.niffler.jupiter.annotation.Spending;
 import guru.qa.niffler.jupiter.annotation.meta.User;
@@ -21,7 +22,7 @@ public class SpendingExtension implements BeforeEachCallback, ParameterResolver 
     public void beforeEach(ExtensionContext context) throws Exception {
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), User.class)
                 .ifPresent(userAnno -> {
-                    if (userAnno.spendings() != null) {
+                    if (ArrayUtils.isNotEmpty(userAnno.spendings())) {
                         Spending spending = userAnno.spendings()[0];
                         SpendJson spend = new SpendJson(
                                 null,
