@@ -1,7 +1,9 @@
 package guru.qa.niffler.jupiter.extension;
 
 import com.github.javafaker.Faker;
+import com.github.jknack.handlebars.internal.lang3.ArrayUtils;
 import guru.qa.niffler.api.SpendApiClient;
+import guru.qa.niffler.helper.DataGenerator;
 import guru.qa.niffler.jupiter.annotation.Category;
 import guru.qa.niffler.jupiter.annotation.meta.User;
 import guru.qa.niffler.model.CategoryJson;
@@ -10,11 +12,10 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 
 public class CategoryExtension implements BeforeEachCallback, ParameterResolver, AfterTestExecutionCallback {
-    Faker faker = new Faker();
-    String randomCategory = faker.cat().breed();
-
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtension.class);
     private final SpendApiClient spendApiClient = new SpendApiClient();
+    DataGenerator dg = new DataGenerator();
+    String randomCategory = dg.randomCategory();
 
 
     @Override
@@ -22,7 +23,7 @@ public class CategoryExtension implements BeforeEachCallback, ParameterResolver,
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), User.class)
                 .ifPresent(
                         userAnno -> {
-                            if (userAnno.categories() != null) {
+                            if (ArrayUtils.isNotEmpty(userAnno.categories())) {
                                 Category categoryAnno = userAnno.categories()[0];
                                 CategoryJson category = new CategoryJson(
                                         null,

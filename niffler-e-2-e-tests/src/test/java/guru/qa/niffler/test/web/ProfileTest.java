@@ -33,7 +33,6 @@ public class ProfileTest {
     @User(
             username = existedUser,
             categories = @Category(
-                    username = "severus",
                     acrhived = true
             )
     )
@@ -51,7 +50,6 @@ public class ProfileTest {
     @User(
             username = existedUser,
             categories = @Category(
-                    username = "severus",
                     acrhived = false
             )
     )
