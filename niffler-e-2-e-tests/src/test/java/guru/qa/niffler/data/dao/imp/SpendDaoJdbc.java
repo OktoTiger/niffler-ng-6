@@ -44,7 +44,6 @@ public class SpendDaoJdbc implements SpendDao {
                 return spend;
             }
 
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -86,14 +85,13 @@ public class SpendDaoJdbc implements SpendDao {
 
                         return Optional.of(se);
                     } else {
-                        Optional.empty();
+                        return Optional.empty();
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return Optional.empty();
     }
 
     @Override
