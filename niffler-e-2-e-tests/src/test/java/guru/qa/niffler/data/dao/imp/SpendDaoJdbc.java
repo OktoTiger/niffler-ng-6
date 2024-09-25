@@ -8,6 +8,8 @@ import guru.qa.niffler.data.entity.spend.SpendEntity;
 import guru.qa.niffler.model.CurrencyValues;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,6 +94,36 @@ public class SpendDaoJdbc implements SpendDao {
             throw new RuntimeException(e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<SpendEntity> findAllByUsername(String username) {
+        try(Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
+            try(PreparedStatement ps = connection.prepareStatement(
+                    "SELECT * FROM category WHERE username = ?",
+                    Statement.RETURN_GENERATED_KEYS
+            )){
+               ps.setObject(1,username);
+               ps.execute();
+               try(ResultSet rs = ps.getResultSet()){
+                   List<SpendEntity> spends = new ArrayList<>();
+                   if(rs.next()){
+                       SpendEntity se = new SpendEntity();
+                       se.setId(rs.getObject("id", UUID.class));
+                       se.setUsername(rs.getString("username"));
+                       se.setCurrency(rs.getObject("currency", CurrencyValues.class));
+                       se.setSpendDate(rs.getDate("spendDate"));
+                       se.setAmount(rs.getDouble("amount"));
+                       se.setDescription(rs.getString("description"));
+                       se.setCategory(rs.getObject("category", CategoryEntity.class));
+                       spends.add(se);
+                   }
+                   return spends;
+               }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
