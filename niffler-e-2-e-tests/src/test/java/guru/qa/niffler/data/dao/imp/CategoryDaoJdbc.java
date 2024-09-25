@@ -15,18 +15,17 @@ public class CategoryDaoJdbc implements CategoryDao {
     public CategoryEntity create(CategoryEntity category) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO spend (id, username, name, archived) " +
-                            "VALUES (?, ?, ?, ?)",
+                    "INSERT INTO spend (username, name, archived) " +
+                            "VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             )) {
-                ps.setObject(1, category.getId());
-                ps.setString(2, category.getUsername());
-                ps.setObject(3, category.getName());
-                ps.setBoolean(4, category.isArchived());
+                ps.setString(1, category.getUsername());
+                ps.setObject(2, category.getName());
+                ps.setBoolean(3, category.isArchived());
 
                 ps.executeUpdate();
                 final UUID generatedKey;
-                try (ResultSet rs = ps.getResultSet()) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
                         generatedKey = rs.getObject("id", UUID.class);
                     } else {
