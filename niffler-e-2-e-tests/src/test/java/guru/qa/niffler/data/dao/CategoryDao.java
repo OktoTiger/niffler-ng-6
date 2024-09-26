@@ -7,9 +7,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CategoryDao {
-    CategoryEntity create (CategoryEntity spend);
+    CategoryEntity create(CategoryEntity spend);
+
     Optional<CategoryEntity> findCategoryById(UUID id);
+
     void deleteCategory(CategoryEntity category);
+
     List<CategoryEntity> findAllByUsername(String username);
+
     Optional<CategoryEntity> findCategoryByUsernameAndCategoryName(String username, String categoryName);
 }
