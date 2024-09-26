@@ -13,7 +13,6 @@ import org.junit.platform.commons.support.AnnotationSupport;
 
 public class CategoryExtensionDB implements BeforeEachCallback, ParameterResolver, AfterTestExecutionCallback {
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtensionDB.class);
-    private final SpendApiClient spendApiClient = new SpendApiClient();
     private final SpendDbClient spendDbClient = new SpendDbClient();
     DataGenerator dg = new DataGenerator();
     String randomCategory = dg.randomCategory();
@@ -39,8 +38,6 @@ public class CategoryExtensionDB implements BeforeEachCallback, ParameterResolve
                             }
 
                         });
-
-
     }
 
 
@@ -48,12 +45,7 @@ public class CategoryExtensionDB implements BeforeEachCallback, ParameterResolve
     public void afterTestExecution(ExtensionContext context) throws Exception {
         CategoryJson category = context.getStore(NAMESPACE).get(context.getUniqueId(), CategoryJson.class);
         if (category != null && !category.archived()) {
-            CategoryJson archivedCategory = new CategoryJson(
-                    category.id(),
-                    category.name(),
-                    category.username(),
-                    true);
-            spendApiClient.updateCategory(archivedCategory);
+            spendDbClient.deleteCategory(category);
         }
     }
 

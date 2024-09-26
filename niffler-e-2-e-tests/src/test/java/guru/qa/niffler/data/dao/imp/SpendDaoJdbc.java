@@ -50,12 +50,12 @@ public class SpendDaoJdbc implements SpendDao {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void deleteSpend(SpendEntity spend) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try(PreparedStatement ps = connection.prepareStatement(
-                    "DELETE FROM category WHERE id = ?",
+                    "DELETE FROM spend WHERE id = ?",
                     Statement.RETURN_GENERATED_KEYS)){
-                ps.setObject(1,id);
+                ps.setObject(1,spend.getId());
                 ps.execute();
             }
         } catch (SQLException e) {
@@ -81,8 +81,12 @@ public class SpendDaoJdbc implements SpendDao {
                         se.setSpendDate(rs.getDate("spendDate"));
                         se.setAmount(rs.getDouble("amount"));
                         se.setDescription(rs.getString("description"));
-                        se.setCategory(rs.getObject("category", CategoryEntity.class));
-
+                        UUID categoryId = rs.getObject("category_id",UUID.class);
+                        if(categoryId != null) {
+                            CategoryEntity category = new CategoryEntity();
+                            category.setId(categoryId);
+                            se.setCategory(category);
+                        }
                         return Optional.of(se);
                     } else {
                         return Optional.empty();
@@ -113,7 +117,12 @@ public class SpendDaoJdbc implements SpendDao {
                        se.setSpendDate(rs.getDate("spendDate"));
                        se.setAmount(rs.getDouble("amount"));
                        se.setDescription(rs.getString("description"));
-                       se.setCategory(rs.getObject("category", CategoryEntity.class));
+                       UUID categoryId = rs.getObject("category_id",UUID.class);
+                       if(categoryId != null) {
+                           CategoryEntity category = new CategoryEntity();
+                           category.setId(categoryId);
+                           se.setCategory(category);
+                       }
                        spends.add(se);
                    }
                    return spends;
