@@ -77,7 +77,7 @@ public class SpendDaoJdbc implements SpendDao {
                         SpendEntity se = new SpendEntity();
                         se.setId(rs.getObject("id", UUID.class));
                         se.setUsername(rs.getString("username"));
-                        se.setCurrency(rs.getObject("currency", CurrencyValues.class));
+                        se.setCurrency(CurrencyValues.valueOf(rs.getString("currency")));
                         se.setSpendDate(rs.getDate("spendDate"));
                         se.setAmount(rs.getDouble("amount"));
                         se.setDescription(rs.getString("description"));
