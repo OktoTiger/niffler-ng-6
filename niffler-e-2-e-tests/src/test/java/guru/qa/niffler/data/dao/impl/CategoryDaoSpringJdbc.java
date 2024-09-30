@@ -10,6 +10,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,4 +58,18 @@ public class CategoryDaoSpringJdbc implements CategoryDao {
             )
     );
   }
+
+  @Override
+  public List<CategoryEntity> findAll() {
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    return
+            List.of(
+            Objects.requireNonNull(jdbcTemplate.queryForObject(
+                    "SELECT * FROM category",
+                    CategoryEntityRowMapper.INSTANCE
+            ))
+    );
+  }
+
+
 }
