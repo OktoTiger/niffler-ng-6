@@ -6,6 +6,7 @@ import guru.qa.niffler.data.entity.auth.AuthorityEntity;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AuthAuthorityDaoJdbc implements AuthAuthorityDao {
 
@@ -30,5 +31,10 @@ public class AuthAuthorityDaoJdbc implements AuthAuthorityDao {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public List<AuthorityEntity> findAll() {
+    return List.of();
   }
 }

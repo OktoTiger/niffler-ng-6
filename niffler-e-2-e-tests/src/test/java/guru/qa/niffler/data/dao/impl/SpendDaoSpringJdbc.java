@@ -2,12 +2,14 @@ package guru.qa.niffler.data.dao.impl;
 
 import guru.qa.niffler.data.dao.SpendDao;
 import guru.qa.niffler.data.entity.spend.SpendEntity;
+import guru.qa.niffler.data.mapper.SpendEntityRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.List;
 import java.util.UUID;
 
 public class SpendDaoSpringJdbc implements SpendDao {
@@ -40,6 +42,14 @@ public class SpendDaoSpringJdbc implements SpendDao {
       final UUID generatedKey = (UUID) kh.getKeys().get("id");
       spend.setId(generatedKey);
       return spend;
+  }
 
+  @Override
+  public List<SpendEntity> findAll() {
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    return List.of(jdbcTemplate.queryForObject(
+            "SELECT * FROM spend",
+            SpendEntityRowMapper.INSTANCE
+    ));
   }
 }
