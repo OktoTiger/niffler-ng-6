@@ -14,8 +14,6 @@ public class CategoryExtensionDB implements BeforeEachCallback, ParameterResolve
     public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtensionDB.class);
     private final SpendDbClient spendDbClient = new SpendDbClient();
     DataGenerator dg = new DataGenerator();
-    String randomCategory = dg.randomCategory();
-
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
@@ -26,7 +24,7 @@ public class CategoryExtensionDB implements BeforeEachCallback, ParameterResolve
                                 Category categoryAnno = userAnno.categories()[0];
                                 CategoryJson category = new CategoryJson(
                                         null,
-                                        randomCategory,
+                                        dg.randomCategory(),
                                         userAnno.username(),
                                         categoryAnno.acrhived());
 

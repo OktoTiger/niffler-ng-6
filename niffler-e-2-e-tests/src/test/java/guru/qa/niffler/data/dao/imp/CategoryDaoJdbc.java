@@ -49,8 +49,7 @@ public class CategoryDaoJdbc implements CategoryDao {
     public Optional<CategoryEntity> findCategoryById(UUID id) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "SELECT * FROM category WHERE id = ?",
-                    Statement.RETURN_GENERATED_KEYS
+                    "SELECT * FROM category WHERE id = ?"
             )) {
                 ps.setObject(1, id);
                 ps.execute();
@@ -78,8 +77,7 @@ public class CategoryDaoJdbc implements CategoryDao {
     public void deleteCategory(CategoryEntity category) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "DELETE FROM category WHERE id = ?",
-                    Statement.RETURN_GENERATED_KEYS)) {
+                    "DELETE FROM category WHERE id = ?")) {
                 ps.setObject(1, category.getId());
                 ps.execute();
             }
@@ -92,8 +90,7 @@ public class CategoryDaoJdbc implements CategoryDao {
     public List<CategoryEntity> findAllByUsername(String username) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "SELECT * FROM category WHERE username = ?",
-                    Statement.RETURN_GENERATED_KEYS
+                    "SELECT * FROM category WHERE username = ?"
             )) {
                 ps.setObject(1, username);
                 ps.execute();
@@ -119,8 +116,7 @@ public class CategoryDaoJdbc implements CategoryDao {
     public Optional<CategoryEntity> findCategoryByUsernameAndCategoryName(String username, String categoryName) {
         try (Connection connection = Databases.connection(CFG.spendJdbcUrl())) {
             try (PreparedStatement ps = connection.prepareStatement(
-                    "SELECT * FROM category WHERE username = ? and name = ?",
-                    Statement.RETURN_GENERATED_KEYS
+                    "SELECT * FROM category WHERE username = ? and name = ?"
             )) {
                 ps.setObject(1, username);
                 ps.setObject(2, categoryName);
