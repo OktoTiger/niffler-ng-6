@@ -79,7 +79,7 @@ public class CategoryDaoJdbc implements CategoryDao {
   @Override
   public List<CategoryEntity> findAll() {
     try (PreparedStatement ps = connection.prepareStatement(
-            "SELECT * FROM category"
+            "SELECT * FROM \"category\""
     )){
       ps.execute();
       try (ResultSet rs = ps.getResultSet()) {

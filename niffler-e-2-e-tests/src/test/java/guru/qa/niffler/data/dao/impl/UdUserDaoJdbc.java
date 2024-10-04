@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,4 +69,31 @@ public class UdUserDaoJdbc implements UdUserDao {
       throw new RuntimeException(e);
     }
   }
+
+  @Override
+  public List<UserEntity> findAll() {
+    try(PreparedStatement ps = connection.prepareStatement(
+            "SELECT * FROM \"user\""
+    )){
+      ps.execute();
+      ResultSet rs = ps.getResultSet();
+      List<UserEntity> result = new ArrayList<>();
+      if(rs.next()) {
+        UserEntity ue = new UserEntity();
+        ue.setId(rs.getObject("id", UUID.class));
+        ue.setUsername(rs.getString("username"));
+        ue.setCurrency(CurrencyValues.valueOf(rs.getString("currency")));
+        ue.setFirstname(rs.getString("firstname"));
+        ue.setSurname(rs.getString("surname"));
+        ue.setPhoto(rs.getBytes("photo"));
+        ue.setPhotoSmall(rs.getBytes("photo_small"));
+        result.add(ue);
+      }
+      return result;
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+  }
+
+
 }

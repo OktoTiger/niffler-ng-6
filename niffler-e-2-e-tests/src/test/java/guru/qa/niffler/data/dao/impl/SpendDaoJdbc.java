@@ -59,7 +59,7 @@ public class SpendDaoJdbc implements SpendDao {
     @Override
     public List<SpendEntity> findAll() {
         try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT * FROM spend"
+                "SELECT * FROM \"spend\""
         )) {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {

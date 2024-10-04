@@ -48,7 +48,7 @@ public class SpendDaoSpringJdbc implements SpendDao {
   public List<SpendEntity> findAll() {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
     return List.of(jdbcTemplate.queryForObject(
-            "SELECT * FROM spend",
+            "SELECT * FROM \"spend\"",
             SpendEntityRowMapper.INSTANCE
     ));
   }
