@@ -16,86 +16,86 @@ import java.util.UUID;
 
 public class CategoryDaoJdbc implements CategoryDao {
 
-  private static final Config CFG = Config.getInstance();
+    private static final Config CFG = Config.getInstance();
 
-  private final Connection connection;
+    private final Connection connection;
 
-  public CategoryDaoJdbc(Connection connection) {
-    this.connection = connection;
-  }
-
-  @Override
-  public CategoryEntity create(CategoryEntity category) {
-    try (PreparedStatement ps = connection.prepareStatement(
-        "INSERT INTO category (username, name, archived) " +
-            "VALUES (?, ?, ?)",
-        Statement.RETURN_GENERATED_KEYS
-    )) {
-      ps.setString(1, category.getUsername());
-      ps.setString(2, category.getName());
-      ps.setBoolean(3, category.isArchived());
-
-      ps.executeUpdate();
-
-      final UUID generatedKey;
-      try (ResultSet rs = ps.getGeneratedKeys()) {
-        if (rs.next()) {
-          generatedKey = rs.getObject("id", UUID.class);
-        } else {
-          throw new SQLException("Can`t find id in ResultSet");
-        }
-      }
-      category.setId(generatedKey);
-      return category;
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
+    public CategoryDaoJdbc(Connection connection) {
+        this.connection = connection;
     }
-  }
 
-  @Override
-  public Optional<CategoryEntity> findCategoryById(UUID id) {
-    try (PreparedStatement ps = connection.prepareStatement(
-        "SELECT * FROM category WHERE id = ?"
-    )) {
-      ps.setObject(1, id);
-      ps.execute();
-      try (ResultSet rs = ps.getResultSet()) {
-        if (rs.next()) {
-          CategoryEntity ce = new CategoryEntity();
-          ce.setId(rs.getObject("id", UUID.class));
-          ce.setUsername(rs.getString("username"));
-          ce.setName(rs.getString("name"));
-          ce.setArchived(rs.getBoolean("archived"));
-          return Optional.of(ce);
-        } else {
-          return Optional.empty();
-        }
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
+    @Override
+    public CategoryEntity create(CategoryEntity category) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO category (username, name, archived) " +
+                        "VALUES (?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+        )) {
+            ps.setString(1, category.getUsername());
+            ps.setString(2, category.getName());
+            ps.setBoolean(3, category.isArchived());
 
-  @Override
-  public List<CategoryEntity> findAll() {
-    try (PreparedStatement ps = connection.prepareStatement(
-            "SELECT * FROM \"category\""
-    )){
-      ps.execute();
-      try (ResultSet rs = ps.getResultSet()) {
-        List<CategoryEntity> categories = new ArrayList<>();
-        if(rs.next()){
-          CategoryEntity ce = new CategoryEntity();
-          ce.setId(rs.getObject("id", UUID.class));
-          ce.setUsername(rs.getString("username"));
-          ce.setName(rs.getString("name"));
-          ce.setArchived(rs.getBoolean("archived"));
-          categories.add(ce);
+            ps.executeUpdate();
+
+            final UUID generatedKey;
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    generatedKey = rs.getObject("id", UUID.class);
+                } else {
+                    throw new SQLException("Can`t find id in ResultSet");
+                }
+            }
+            category.setId(generatedKey);
+            return category;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return categories;
-      }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
     }
-  }
+
+    @Override
+    public Optional<CategoryEntity> findCategoryById(UUID id) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT * FROM category WHERE id = ?"
+        )) {
+            ps.setObject(1, id);
+            ps.execute();
+            try (ResultSet rs = ps.getResultSet()) {
+                if (rs.next()) {
+                    CategoryEntity ce = new CategoryEntity();
+                    ce.setId(rs.getObject("id", UUID.class));
+                    ce.setUsername(rs.getString("username"));
+                    ce.setName(rs.getString("name"));
+                    ce.setArchived(rs.getBoolean("archived"));
+                    return Optional.of(ce);
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<CategoryEntity> findAll() {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT * FROM \"category\""
+        )) {
+            ps.execute();
+            try (ResultSet rs = ps.getResultSet()) {
+                List<CategoryEntity> categories = new ArrayList<>();
+                if (rs.next()) {
+                    CategoryEntity ce = new CategoryEntity();
+                    ce.setId(rs.getObject("id", UUID.class));
+                    ce.setUsername(rs.getString("username"));
+                    ce.setName(rs.getString("name"));
+                    ce.setArchived(rs.getBoolean("archived"));
+                    categories.add(ce);
+                }
+                return categories;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
