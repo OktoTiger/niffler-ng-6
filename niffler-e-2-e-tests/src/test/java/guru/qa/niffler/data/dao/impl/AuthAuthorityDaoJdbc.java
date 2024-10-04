@@ -1,6 +1,7 @@
 package guru.qa.niffler.data.dao.impl;
 
 import guru.qa.niffler.data.dao.AuthAuthorityDao;
+import guru.qa.niffler.data.entity.auth.Authority;
 import guru.qa.niffler.data.entity.auth.AuthorityEntity;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AuthAuthorityDaoJdbc implements AuthAuthorityDao {
 
@@ -34,7 +36,7 @@ public class AuthAuthorityDaoJdbc implements AuthAuthorityDao {
       throw new RuntimeException(e);
     }
   }
-
+//todo проверить правильно ли передал enum
   @Override
   public List<AuthorityEntity> findAll() {
     try(PreparedStatement ps = connection.prepareStatement(
@@ -43,11 +45,14 @@ public class AuthAuthorityDaoJdbc implements AuthAuthorityDao {
       ps.execute();
       try(ResultSet rs = ps.getGeneratedKeys()) {
         List<AuthorityEntity> result = new ArrayList<>();
-        while (rs.next()) {
-          AuthorityEntity a = new AuthorityEntity();
-          a.setAuthority();
-
+        if  (rs.next()) {
+          AuthorityEntity ae = new AuthorityEntity();
+          ae.setId(rs.getObject("id", UUID.class));
+          ae.setAuthority(rs.getObject("authority", Authority.class));
+          ae.setUserId(rs.getObject("user_id", UUID.class));
+          result.add(ae);
         }
+        return result;
       }
 
     } catch (SQLException e) {
