@@ -84,7 +84,7 @@ public class AuthUserDaoJdbc implements AuthUserDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 List<AuthUserEntity> result = new ArrayList<>();
-                if (rs.next()) {
+                while (rs.next()) {
                     AuthUserEntity ae = new AuthUserEntity();
                     ae.setId(rs.getObject("id", UUID.class));
                     ae.setUsername(rs.getString("username"));

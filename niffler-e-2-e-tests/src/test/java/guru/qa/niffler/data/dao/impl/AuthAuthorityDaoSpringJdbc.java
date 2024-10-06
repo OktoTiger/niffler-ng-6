@@ -42,7 +42,7 @@ public class AuthAuthorityDaoSpringJdbc implements AuthAuthorityDao {
     @Override
     public List<AuthorityEntity> findAll() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return List.of(jdbcTemplate.queryForObject("SELECT * FROM \"authority\"",
-                AuthAuthorityEntityRowMapper.INSTANCE));
+        return jdbcTemplate.query("SELECT * FROM \"authority\"",
+                AuthAuthorityEntityRowMapper.INSTANCE);
     }
 }

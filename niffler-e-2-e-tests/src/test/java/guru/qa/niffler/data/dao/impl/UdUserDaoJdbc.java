@@ -78,7 +78,7 @@ public class UdUserDaoJdbc implements UdUserDao {
             ps.execute();
             ResultSet rs = ps.getResultSet();
             List<UserEntity> result = new ArrayList<>();
-            if (rs.next()) {
+            while (rs.next()) {
                 UserEntity ue = new UserEntity();
                 ue.setId(rs.getObject("id", UUID.class));
                 ue.setUsername(rs.getString("username"));

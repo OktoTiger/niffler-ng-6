@@ -62,9 +62,9 @@ public class UdUserDaoSpringJdbc implements UdUserDao {
   @Override
   public List<UserEntity> findAll() {
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    return List.of(jdbcTemplate.queryForObject(
+    return jdbcTemplate.query(
             "SELECT * FROM \"user\"",
             UdUserEntityRowMapper.instance
-    ));
+    );
   }
 }

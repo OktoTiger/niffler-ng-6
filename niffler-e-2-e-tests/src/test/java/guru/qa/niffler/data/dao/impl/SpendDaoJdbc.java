@@ -17,8 +17,6 @@ import java.util.UUID;
 
 public class SpendDaoJdbc implements SpendDao {
 
-    private static final Config CFG = Config.getInstance();
-
     private final Connection connection;
 
     public SpendDaoJdbc(Connection connection) {
@@ -64,7 +62,7 @@ public class SpendDaoJdbc implements SpendDao {
             ps.execute();
             try (ResultSet rs = ps.getResultSet()) {
                 List<SpendEntity> result = new ArrayList<>();
-                if (rs.next()) {
+                while (rs.next()) {
                     SpendEntity spend = new SpendEntity();
                     spend.setId(rs.getObject("id", UUID.class));
                     spend.setUsername(rs.getString("username"));

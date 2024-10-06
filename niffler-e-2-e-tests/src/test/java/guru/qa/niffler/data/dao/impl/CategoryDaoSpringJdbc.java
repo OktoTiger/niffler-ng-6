@@ -17,8 +17,6 @@ import java.util.UUID;
 
 public class CategoryDaoSpringJdbc implements CategoryDao {
 
-    private static final Config CFG = Config.getInstance();
-
     private DataSource dataSource;
 
 
@@ -63,10 +61,9 @@ public class CategoryDaoSpringJdbc implements CategoryDao {
     public List<CategoryEntity> findAll() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return
-                List.of(jdbcTemplate.queryForObject(
+                jdbcTemplate.query(
                                 "SELECT * FROM \"category\"",
                                 CategoryEntityRowMapper.INSTANCE
-                        )
                 );
     }
 
